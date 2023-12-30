@@ -1,2 +1,3 @@
-hostComputer = get_shell("Hydra", "noobmaster").host_computer
-ssh_commands = hostComputer.File("/home/Hydra/Logins.txt")
+shell = get_shell("Hydra", "noobmaster").host_computer
+path = shell.File("/home/Hydra/Logins.txt")
+print("Script gets executed within: " + parent_path(path))
