@@ -14,23 +14,20 @@ if not file then exit("Decipher: " + origFile + " not found")
 if not file.has_permission("r") then exit("Decipher: " + origFile + " permission denied")
 if file.get_content.len == 0 then exit("Decipher: " + origFile + " is empty")
 
-content = file.get_content
-lines = content.split("\n")
+lines = file.get_content.split("\n")
 password = null
-
 if lines.len == 1 then
     userpass = lines[0].split(":")
     password = Getpassword(userpass)
 else
     print("Multiple passwords detected")
-    lineDict = {}
+    numLine = 1
     for line in lines
         if line.len > 0 then
-            lineDict[i + 1] = line
-            print(i + 1 + ": " + line)
+            print(numLine + ": " + line)
+            numLine = numLine + 1
         end if
     end for
-
     option = ""
     inputOK = false
     while ( not inputOK )
@@ -39,12 +36,11 @@ else
             print("Invalid option")
         else
             inputOK = true
-            userpass = lineDict[option].split(":")
-            print("User: " + userpass[0])
-            password = Getpassword(userpass)
-            break
         end if
     end while
+    userpass = lines[option - 1].split(":")
+    print("User: " + userpass[0])
+    password = Getpassword(userpass)
 end if
 
 if not password then exit("Decipher: " + origFile + " password not found")
