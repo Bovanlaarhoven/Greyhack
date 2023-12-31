@@ -33,8 +33,6 @@ for i in range(1, len(Scan) + 1)
     end if
 end for
 
-print("Type of result: " + typeof(result))
-
 if result != null then
     type = typeof(result)
     if type == "shell" then result.start_terminal
