@@ -24,11 +24,11 @@ for i in range(1, len(Scan) + 1)
             result = metaLib.overflow(Scan[i - 1], exploits[i - 1])
         end if
         if result != null then
-            print("Type of result: " + typeof(result))
             print("Attack successful!")
             print("Scan[" + i + "]: " + Scan[i - 1])
             print("Exploit[" + i + "]: " + exploits[i - 1])
             print("Memory address: " + Scan[i - 1])
+            break
         end if
     end if
 end for
@@ -37,18 +37,17 @@ print("Type of result: " + typeof(result))
 
 if result != null then
     type = typeof(result)
-    if type != "shell" and type != "file" then exit("Type not supported")
     if type == "shell" then result.start_terminal
     if type == "computer" then
         passFile = result.File("/etc/passwd")
         if not passFile then exit("File not found")
-        if passFile.had_permission("r") then
+        if passFile.has_permission("r") then
             if passFile == null then exit("File Empty")
             fileLocation = "/home/"+active_user
-            createFile + get_shell.host_computer.File(fileLocation+"/receivedpasswd.txt")
+            createFile = get_shell.host_computer.File(fileLocation+"/receivedpasswd.txt")
             if createFile then createFile.delete
-            get_shell.host_computer.touch(fileLocation+"/receivedpasswd.txt")
-            get_shell.host_computer.File(fileLocation+"/receivedpasswd.txt").set_content(result.File("/etc/passwd").content)
+            get_shell.host_computer.touch(fileLocation, "receivedpasswd.txt")
+            get_shell.host_computer.File(fileLocation+"/receivedpasswd.txt").set_content(result.File("/etc/passwd").get_content)
             createFile = get_shell.host_computer.File(fileLocation+"/receivedpasswd.txt")
         else
             exit("Unable to access password file")
@@ -64,10 +63,10 @@ if result != null then
             print("0. Exit")
             opt = user_input("Option: ")
             if opt == "0" then exit("Exiting")
-            if opt == 1 then
+            if opt == "1" then
                 get_shell.launch("/bin/decipher", fileLocation+"/receivedpasswd.txt")
             end if
-            if opt == 2 then
+            if opt == "2" then
                 if createFile then createFile.delete
                 exit("File deleted")
             end if
