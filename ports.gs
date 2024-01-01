@@ -9,10 +9,8 @@ else
     router = get_router(Address)
 end if
 
-if not lan then
-    ports = router.used_ports
-else
-    ports = router.device_ports(ipAddress)
-end if
+ports = used_ports(router)
 
-print("Ports: " + ports.port_number)
+for port in ports
+    print(port_number(port))
+end for
