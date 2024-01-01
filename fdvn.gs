@@ -33,8 +33,11 @@ for i in range(1, len(Scan) + 1)
     end if
 end for
 
+print(typeof(result))
+
 if result != null then
     type = typeof(result)
+    if type == "file" then exit("Type not supported")
     if type == "shell" then result.start_terminal
     if type == "computer" then
         passFile = result.File("/etc/passwd")
