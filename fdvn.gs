@@ -1,13 +1,6 @@
 metaxploit = include_lib("/lib/metaxploit.so")
 Address = params[0]
 port = params[1].to_int()
-lan = is_lan_ip(Address)
-
-if lan then
-    router = get_router()
-else
-    router = get_router(Address)
-end if
 
 net_session = metaxploit.net_use(Address, port)
 metaLib = net_session.dump_lib
@@ -15,12 +8,7 @@ Scan = metaxploit.scan(metaLib)
 ScanAddress = metaxploit.scan_address(metaLib, Scan[1])
 lan = is_lan_ip(Address)
 segments = ScanAddress.split("Unsafe check: ")[1:]
-ports = used_ports(router)
 exploits = []
-
-for port in ports
-    print(port_number(port))
-end for
 
 for segment in segments
     labelStart = segment.indexOf("<b>")
