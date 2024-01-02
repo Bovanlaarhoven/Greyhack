@@ -6,7 +6,7 @@ ip = params[0]
 if typeof(ip) == "string" then
     ipAddress = nslookup(ip)
 else
-    ipAddress = ip
+    ipAddress = ip.to_int()
 end if    
     
 isLanIp = is_lan_ip(ipAddress)

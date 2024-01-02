@@ -58,12 +58,15 @@ exploit = null
    if (not hasRequirement) then
       labelStart = segment.indexOf("<b>")
       labelEnd = segment.indexOf("</b>")
+      print(segment[labelStart + 3: labelEnd])
       exploit = segment[labelStart + 3: labelEnd]
    end if
 end for
 if (exploit) then
    print("Exploiting... " + target + ":" + exploit)
-   print(metaLib.overflow(target, exploit))
+   result = metaLib.overflow(target, exploit)
 else
    print("No exploit found with zero requirements")
 end if
+
+print(typeof(result))
