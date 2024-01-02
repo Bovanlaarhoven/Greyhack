@@ -6,7 +6,6 @@ net_session = metaxploit.net_use(Address, port)
 metaLib = net_session.dump_lib
 Scan = metaxploit.scan(metaLib)
 ScanAddress = metaxploit.scan_address(metaLib, Scan[1])
-lan = is_lan_ip(Address)
 segments = ScanAddress.split("Unsafe check: ")[1:]
 exploits = []
 
