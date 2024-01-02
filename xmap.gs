@@ -1,8 +1,14 @@
 if params.len != 1 or params[0] == "-h" or params[0] == "--help" then exit(command_info)
-if not is_valid_ip(params[0]) then exit("nmap: invalid IP address: " + params[0])
 if not get_shell.host_computer.is_network_active then exit("nmap: network is not active")
 
-ipAddress = params[0]
+ip = params[0]
+
+if typeof(ip) == "string" then
+    ipAddress = nslookup(ip)
+else
+    ipAddress = ip
+end if    
+    
 isLanIp = is_lan_ip(ipAddress)
 
 if isLanIp then
